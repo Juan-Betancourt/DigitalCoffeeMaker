@@ -20,7 +20,7 @@ def __process_coins__():
     """Returns total calculated from coins inserted"""
     print("Please insert coins")
     quarters = int(input("How many quarters? "))
-    dimes
+    dimes =
 
 #TODO: 6. Check if Transaction was Successful
 
