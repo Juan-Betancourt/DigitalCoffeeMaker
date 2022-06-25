@@ -1,17 +1,52 @@
-from menu import MENU, profit, resources
+from menu import MENU, resources
+
+profit = 0
 
 
+def __sufficient_coffee_resources__(order_ingredients):
+    """Returns True when order can be made, False if there are insufficient ingredients"""
+    for item in order_ingredients:
+        if order_ingredients[item] > resources[item]:
+            print(f"Sorry there is not enough {item}.")
+            return False
+    return True
 
-#TODO: 4. Check sufficient Resources
 
-#TODO: 1. Prompt User Question
-#TODO: 2. Enter while loop to turn on and off machine
-#TODO: 3. Print Report
+def __process_coins__():
+    """Returns total calculated from coins inserted"""
+    print("\nThe cost of special brewed coffee\nEspresso $1.50 | Latte $2.50 | Cappuccino $3.00")
+    print("\nPlease insert coins")
+    quarters = int(input("How many quarters? ")) * 0.25
+    dimes = int(input("How many dimes? ")) * 0.10
+    nickels = int(input("How many nickels? ")) * 0.05
+    total = quarters + dimes + nickels
+    return total
+
+
+def __check_successful_transaction__(money_dispense, drink_price):
+    """Return True if payment is accepted, or False if there are insufficient funds"""
+    if money_dispense >= drink_price:
+        change = round(money_dispense - drink_price, 2)
+        print(f"Here is ${change} in change.")
+        global profit
+        profit += drink_price
+        return True
+    else:
+        print(f"Sorry, those were insufficient funds. Money refunded")
+        return False
+
+
+def __make_coffee__(drink_name, order_ingredients):
+    """Deduct the required ingredients from the available resources"""
+    for item in order_ingredients:
+        resources[item] -= order_ingredients[item]
+    print(f"Here is your {drink_name} ☕. Enjoy!")
+
 
 coffee_machine_on = True
 
 while coffee_machine_on:
-    user_coffee_selection = input("What type of coffee would you like? (espresso | latte | cappuccino): ").lower()
+    user_coffee_selection = input("What type of coffee would you like? (Espresso | Latte | Cappuccino): ").lower()
     if user_coffee_selection == "off":
         coffee_machine_on = False
     elif user_coffee_selection == "report":
@@ -21,21 +56,7 @@ while coffee_machine_on:
         print(f"money ${profit}")
     else:
         drink = MENU[user_coffee_selection]
-
-
-
-#TODO: 5. Process Coins
-
-def __process_coins__():
-    """Returns total calculated from coins inserted"""
-    print("Please insert coins\n")
-    quarters = int(input("How many quarters? ")) * 0.25
-    dimes = int(input("How many dimes? ")) * 0.10
-    nickel = int(input("How many nickels? ")) * 0.05
-    total = (quarters, dimes, nickel)
-    return total
-
-
-#TODO: 6. Check if Transaction was Successful
-
-#TODO: 7. Make Coffee for the Customer
+        if __sufficient_coffee_resources__(drink["ingredients"]):
+            payment = __process_coins__()
+            if __check_successful_transaction__(payment, drink["cost"]):
+                __make_coffee__(user_coffee_selection, drink["ingredients"])

@@ -24,7 +24,6 @@ MENU = {
     }
 }
 
-profit = 0
 
 resources = {
     "water": 300,
