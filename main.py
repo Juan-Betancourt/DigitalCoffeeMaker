@@ -53,7 +53,7 @@ while coffee_machine_on:
         print(f"Water: {resources['water']}ml")
         print(f"Milk {resources['milk']}ml")
         print(f"Coffee {resources['coffee']}g")
-        print(f"money ${profit}")
+        print(f"Money ${profit}")
     else:
         drink = MENU[user_coffee_selection]
         if __sufficient_coffee_resources__(drink["ingredients"]):
