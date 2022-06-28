@@ -6,7 +6,7 @@ profit = 0
 def __sufficient_coffee_resources__(order_ingredients):
     """Returns True when order can be made, False if there are insufficient ingredients"""
     for item in order_ingredients:
-        if order_ingredients[item] > resources[item]:
+        if order_ingredients[item] >= resources[item]:
             print(f"Sorry there is not enough {item}.")
             return False
     return True
